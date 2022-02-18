@@ -1,0 +1,515 @@
+* Dashboard
+** Emacs dashboard is a extensible startup screen showing you recent files, bookmarks, agenda items and Emacs banner
+#+begin_src emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents  . 5)
+			      (projects . 5)))
+    (setq dashboard-banner-logo-title "I am just a coder for fun"))
+#+end_src
+
+* Async mode
+Lets use Asynchronous functions wherever possible, pretty useful
+#+begin_src emacs-lisp
+(use-package async
+  :ensure t
+  :init (dired-async-mode 1))
+#+end_src
+
+* Cool Icons
+#+begin_src emacs-lisp
+(use-package all-the-icons
+  :ensure t
+  :init)
+
+(use-package all-the-icons-dired
+  :ensure t
+  :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+(use-package all-the-icons-ibuffer
+  :ensure t
+  :init (all-the-icons-ibuffer-mode 1))
+#+end_src
+
+* Delete Selection mode
+By default in Emacs, we don’t have ability to select text, and then start typing and our new text replaces the selection.  Let’s fix that!
+#+begin_src emacs-lisp
+(delete-selection-mode t)
+#+end_src
+
+* Emojis
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
+#+begin_src emacs-lisp
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+#+end_src
+
+* Fonts
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist
+	     '(font . "JetBrains Mono-14"))
+#+end_src
+
+* Theme
+#+begin_src emacs-lisp
+(use-package cyberpunk-theme
+  :ensure t)
+(load-theme 'cyberpunk t)
+#+end_src
+
+* Making life a little bit easier
+#+begin_src emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+* Disabling backups
+These lines wont make any backup files and auto saving.
+#+begin_src emacs-lisp
+(setq make-backup-file nil)
+(setq auto-save-default nil)
+#+end_src
+
+* Zooming in and out
+You can use the bindings CTRL plus =/- for zooming in/out.  You can also use CTRL plus the mouse wheel for zooming in/out.
+#+begin_src emacs-lisp
+;; zoom in/out like we do everywhere else.
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
+* GUI Tweaks
+Let's make this look better
+** Disabling Menubar, Toolbar and scrollbars
+#+begin_src emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+end_src
+
+** Some other tweaks
+#+begin_src emacs-lisp
+(setq inhibit-startup-message t)
+(setq scroll-conservatively 100)
+(setq ribg-bell-function 'ignore)
+#+end_src
+
+** Display line numbers and Truncated lines
+#+begin_src emacs-lisp
+(global-display-line-numbers-mode 1)
+(global-visual-line-mode t)
+#+end_src
+
+** Change modeline to spacemac's modeline
+#+begin_src emacs-lisp
+(use-package spaceline
+  :ensure t
+  :config
+  (require 'spaceline-config)
+  (setq powerline-default-separator (quote arrow))
+  (spaceline-spacemacs-theme))
+#+end_src
+
+** Diminish modes
+#+begin_src emacs-lisp
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'which-key-mode)
+  (diminish 'linum-relative-mode)
+  (diminish 'hungry-delete-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'subword-mode)
+  (diminish 'beacon-mode)
+  (diminish 'irony-mode)
+  (diminish 'page-break-lines-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'rainbow-delimiters-mode)
+  (diminish 'rainbow-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'helm-mode))
+#+end_src
+
+* Don't show system load to me, Emacs
+#+begin_src emacs-lisp
+(setq display-time-default-load-average nil)
+#+end_src
+
+* Subwords
+Subword will remaps word-based editing commands to subword-based commands that handle symbols with mixed uppercase and lowercase letters.
+#+begin_src emacs-lisp
+(global-subword-mode 1)
+#+end_src
+
+* IVY (COUNSEL/SWIPER)
+Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
+
+** Installing IVY and basic setup
+#+begin_src emacs-lisp
+(use-package counsel
+  :after ivy
+  :config (counsel-mode))
+(use-package ivy
+  :defer 0.1
+  :diminish
+  :bind
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :custom
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+(use-package ivy-rich
+  :after ivy
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer)
+  (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+#+end_src
+
+** Making M-x great again
+The following line removes the annoying ‘^’ in things like counsel-M-x and other ivy/counsel prompts.  The default ‘^’ string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I’m searching for a command without knowing what it begins with though.
+#+begin_src emacs-lisp
+(setq ivy-initial-inputs-alist nil)
+#+end_src
+
+Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
+#+begin_src emacs-lisp
+(use-package smex)
+(smex-initialize)
+#+end_src
+
+* IDO
+** Enabling IDO mode
+#+begin_src emacs-lisp
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+end_src
+
+** IDO Vertical mode
+#+begin_src emacs-lisp
+(use-package ido-vertical-mode
+  :ensure t
+  :init
+  (ido-vertical-mode 1))
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+#+end_src
+
+* Ivy Postframe
+Ivy-posframe is an ivy extension, which lets ivy use posframe to show its candidate menu.  Some of the settings below involve:
+NOTE: If the setting for ‘ivy-posframe-display’ is set to ‘nil’ (false), anything that is set to ‘ivy-display-function-fallback’ will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to ‘t’ (true), then the fallback position will be centered in the window.
+#+begin_src emacs-lisp
+(use-package ivy-posframe
+  :init
+  (setq ivy-posframe-display-functions-alist
+    '((swiper                     . ivy-posframe-display-at-point)
+      (complete-symbol            . ivy-posframe-display-at-point)
+      (counsel-M-x                . ivy-display-function-fallback)
+      (counsel-esh-history        . ivy-posframe-display-at-window-center)
+      (counsel-describe-function  . ivy-display-function-fallback)
+      (counsel-describe-variable  . ivy-display-function-fallback)
+      (counsel-find-file          . ivy-display-function-fallback)
+      (counsel-recentf            . ivy-display-function-fallback)
+      (counsel-register           . ivy-posframe-display-at-frame-bottom-window-center)
+      (dmenu                      . ivy-posframe-display-at-frame-top-center)
+      (nil                        . ivy-posframe-display))
+    ivy-posframe-height-alist
+    '((swiper . 20)
+      (dmenu . 20)
+      (t . 10)))
+  :config
+  (ivy-posframe-mode 1)) ; 1 enables posframe-mode, 0 disables it.
+#+end_src
+
+* MAGIT
+A git client for Emacs.  Often cited as a killer feature for Emacs.
+#+begin_src emacs-lisp
+(setq bare-git-dir (concat "--git-dir=" (expand-file-name "~/.dotfiles")))
+(setq bare-work-tree (concat "--work-tree=" (expand-file-name "~")))
+;; use maggit on git bare repos like dotfiles repos, don't forget to change `bare-git-dir' and `bare-work-tree' to your needs
+(defun me/magit-status-bare ()
+  "set --git-dir and --work-tree in `magit-git-global-arguments' to `bare-git-dir' and `bare-work-tree' and calls `magit-status'"
+  (interactive)
+  (require 'magit-git)
+  (add-to-list 'magit-git-global-arguments bare-git-dir)
+  (add-to-list 'magit-git-global-arguments bare-work-tree)
+  (call-interactively 'magit-status))
+
+;; if you use `me/magit-status-bare' you cant use `magit-status' on other other repos you have to unset `--git-dir' and `--work-tree'
+;; use `me/magit-status' insted it unsets those before calling `magit-status'
+(defun me/magit-status ()
+  "removes --git-dir and --work-tree in `magit-git-global-arguments' and calls `magit-status'"
+  (interactive)
+  (require 'magit-git)
+  (setq magit-git-global-arguments (remove bare-git-dir magit-git-global-arguments))
+  (setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
+  (call-interactively 'magit-status))
+
+(use-package magit)
+#+end_src
+
+* Electric pair mode
+Electric Pair mode, a global minor mode, provides a way to easily insert matching delimiters: parentheses, braces, brackets, etc.
+#+begin_src emacs-lisp
+(setq electric-pair-pairs '(
+			     (?\{ . ?\})
+			     (?\( . ?\))
+			     (?\[ . ?\])
+			     (?\" . ?\")
+			     ))
+(electric-pair-mode t)
+#+end_src
+
+* Rainbow
+Mostly useful if you are into web development or game development. Every time emacs encounters a hexadeimal code that resembles a color, it will automatically highlight it in the appropriate color. This is a lot cooler than you may think.
+#+begin_src emacs-lisp
+(use-package rainbow-mode
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'rainbow-mode))
+#+end_src
+
+* Rainbow Delimeter
+Colors parentheses and other delimiters depending on their depth, useful for any language using them, especially lisp.
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (rainbow-delimiters-mode 1))
+#+end_src
+
+* Expand Region
+A pretty simple package, takes your cursor and sementically expands the region, so words, sentencies, maybe the contents of some parentheses, it’s awesome, try it out.
+#+begin_src emacs-lisp
+(use-package expand-region
+  :ensure t
+  :bind ("C-q" . er/expand-region))
+#+end_src
+
+* Sudo edit
+Opening nano to edit files which require root permission is pain in the butt. This package sudo-edit allow us to edit files which require root permission with emacs.
+#+begin_src emacs-lisp
+(use-package sudo-edit
+  :ensure t
+  :bind ("s-e" . sudo-edit))
+#+end_src
+
+* Buffers
+Workflow with emacs depends alot on Buffers. If you know how to quickly change and manage buffers, you are not a novice in emacs. Sadly by default emacs have some bad way to manage buffers. Here I tried to encounter those issues.
+** Always murder current buffer
+Doing C-x k should kill the current buffer at all times.
+#+begin_src emacs-lisp
+(defun kill-curr-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-x k") 'kill-curr-buffer)
+#+end_src
+
+** Toggle maximize buffer
+An Emacs function to temporarily make one buffer fullscreen. You can quickly restore the old window setup.
+#+begin_src emacs-lisp
+(defun toggle-maximize-buffer () "Maximize buffer"
+       (interactive)
+       (if (= 1 (length (window-list)))
+           (jump-to-register '_)
+         (progn
+           (set-register '_ (list (current-window-configuration)))
+           (delete-other-windows))))
+(global-set-key [(super shift return)] 'toggle-maximize-buffer) 
+#+end_src
+
+** Enable iBuffers
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+#+end_src
+
+** Expert Mode
+#+begin_src emacs-lisp
+(setq ibuffer-expert t)
+#+end_src
+
+* Moving around Emacs
+** Switch Windows
+#+begin_src emacs-lisp
+(use-package switch-window
+  :ensure t
+  :config
+  (setq switch-window-input-style 'minibuffer)
+  (setq switch-window-increase 4)
+  (setq switch-window-threshold 2)
+  (setq switch-window-shortcut-style 'qwerty)
+  (setq switch-window-qwerty-shortcuts
+	  '("a" "s" "d" "f" "h" "j" "k" "l"))
+  :bind
+  ([remap other-window] . switch-window))
+#+end_src
+
+** Following window splits
+#+begin_src emacs-lisp
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+end_src
+
+* Auto completions
+** Company
+#+begin_src emacs-lisp
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 1)
+  (setq company-minimum-prefix-length 3)
+  :init
+  (company-mode 1))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  (define-key company-active-map (kbd "SPC") #'company-abort))
+#+end_src
+
+* Dired Launch
+#+begin_src emacs-lisp
+(use-package dired-launch
+  :ensure t
+  :init
+  (dired-launch-enable))
+#+end_src
+
+* Projectile
+Projectile is an awesome project manager, mostly because it recognized directories with .git directory as projects and helps you manage them accordingly.
+** Enable projectile globally
+This makes sure that everything can be a project.
+#+begin_src emacs-lisp
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode 1))
+#+end_src
+
+** Let projectile call make
+Let projectile call make
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f5>") 'projectile-compile-project)
+#+end_src
+
+* ORG Mode
+Org Mode is THE killer feature within Emacs.  But it does need some tweaking.
+** Defining a few things
+#+begin_src emacs-lisp
+(setq org-ellipsis " ")
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-confirm-babel-evaluate nil)
+(setq org-export-with-smart-quotes t)
+(setq org-src-window-setup 'current-window)
+(add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+
+** Enabling Org Bullets
+Org-bullets gives us attractive bullets rather than asterisks.
+#+begin_src emacs-lisp
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+
+** Enabling org temp mode to access <s - Tab functionality
+#+begin_src emacs-lisp
+(use-package org-tempo
+  :ensure nil) ;; tell use-package not to try to install org-tempo since it's already there.
+#+end_src
+
+** Source Code Block Syntax Highlighting
+We want the same syntax highlighting in source blocks as in the native language files.
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t
+    org-src-tab-acts-natively t
+    org-confirm-babel-evaluate nil
+    org-edit-src-content-indentation 0)
+#+end_src
+
+** Automatically Create Table of Contents
+Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful for README files on GitHub).  Use :TOC: to create the table.
+#+begin_src emacs-lisp
+(use-package toc-org
+  :commands toc-org-enable
+  :init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
+
+** Make M-RET Not Add Blank Lines
+#+begin_src emacs-lisp
+(setq org-blank-before-new-entry (quote ((heading . nil)
+                                         (plain-list-item . nil))))
+#+end_src
+
+* SCROLLING
+Emacs’ default scrolling is annoying because of the sudden half-page jumps.  Also, I wanted to adjust the scrolling speed.
+#+begin_src emacs-lisp
+(setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; how many lines at a time
+(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+#+end_src
+
+* VTerm
+Vterm is a terminal emulator within Emacs.  The ‘shell-file-name’ setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to ‘fish’ but could change it to ‘bash’ or ‘zsh’ if you prefer.
+#+begin_src emacs-lisp
+(use-package vterm
+  :ensure t
+  :init
+  (global-set-key (kbd "<s-return>") 'vterm))
+#+end_src
+
+* WhichKey
+Which-key is a minor mode for Emacs that displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
+NOTE: Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
+#+begin_src emacs-lisp
+(use-package which-key
+  :init
+  (setq which-key-side-window-location 'bottom
+        which-key-sort-order #'which-key-key-order-alpha
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 6
+        which-key-side-window-slot -10
+        which-key-side-window-max-height 0.25
+        which-key-idle-delay 0.8
+        which-key-max-description-length 25
+        which-key-allow-imprecise-window-fit t
+        which-key-separator " → " ))
+(which-key-mode)
+#+end_src
+
+* RUNTIME PERFORMANCE
+Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
+#+begin_src emacs-lisp
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
+#+end_src
