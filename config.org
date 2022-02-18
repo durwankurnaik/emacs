@@ -214,7 +214,7 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 (setq ido-vertical-define-keys 'C-n-and-C-p-only)
 #+end_src
 
-* Ivy Postframe
+* Ivy Posframe
 Ivy-posframe is an ivy extension, which lets ivy use posframe to show its candidate menu.  Some of the settings below involve:
 NOTE: If the setting for ‘ivy-posframe-display’ is set to ‘nil’ (false), anything that is set to ‘ivy-display-function-fallback’ will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to ‘t’ (true), then the fallback position will be centered in the window.
 #+begin_src emacs-lisp
