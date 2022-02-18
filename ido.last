@@ -17,7 +17,7 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/sparrxw/.emacs.d/" (25103 46445 840036 73000) "recentf" "ido.last" "eshell/" "../" "smex-items" "config.org" "elpa/" "transient/" "README.org" "config.el" "ido.last~" ".gitignore" "projectile-bookmarks.eld" "emojis/" "recentf~" "auto-save-list/" "./" "init.el" ".git/")
+ ("/home/sparrxw/.emacs.d/" (25103 55995 260121 373000) "recentf" "ido.last" ".#config.org" "tramp" "eshell/" "../" "smex-items" "config.org" "elpa/" "transient/" "README.org" "url/" "config.el" "ido.last~" ".gitignore" "projectile-bookmarks.eld" "emojis/" "recentf~" "auto-save-list/" "./" "init.el" ".git/")
 
  ("/home/" (25089 23035 529522 614000) "sparrxw/" "../" "./")
 

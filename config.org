@@ -59,6 +59,13 @@ Emojify is an Emacs extension to display emojis. It can display github style emo
 (load-theme 'cyberpunk t)
 #+end_src
 
+* Clock
+A clock that shows time at the end of the modeline
+#+begin_src emacs-lisp
+(setq display-time-24hr-format t)
+(display-time-mode 1)
+#+end_src
+
 * Making life a little bit easier
 #+begin_src emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -103,7 +110,7 @@ Let's make this look better
 (global-visual-line-mode t)
 #+end_src
 
-** Change modeline to spacemac's modeline
+** Change modeline to spacemacs modeline
 #+begin_src emacs-lisp
 (use-package spaceline
   :ensure t
@@ -113,31 +120,14 @@ Let's make this look better
   (spaceline-spacemacs-theme))
 #+end_src
 
-** Diminish modes
+* Emacs, come rule my computer
+If you want emacs as the whole and soul of your computer, then proceed with this.
 #+begin_src emacs-lisp
-(use-package diminish
-  :ensure t
-  :init
-  (diminish 'which-key-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'evil-collection-unimpaired-mode)
-  (diminish 'ivy-postframe-mode)
-  (diminish 'counsel-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'which-key-mode)
-  (diminish 'linum-relative-mode)
-  (diminish 'hungry-delete-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'subword-mode)
-  (diminish 'beacon-mode)
-  (diminish 'irony-mode)
-  (diminish 'page-break-lines-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'rainbow-delimiters-mode)
-  (diminish 'rainbow-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'flycheck-mode)
-  (diminish 'helm-mode))
+;;(use-package exwm
+;;  :ensure t
+;;  :config
+;;  (require 'exwm-config)
+;;  (exwm-config-default))
 #+end_src
 
 * Don't show system load to me, Emacs
@@ -149,6 +139,14 @@ Let's make this look better
 Subword will remaps word-based editing commands to subword-based commands that handle symbols with mixed uppercase and lowercase letters.
 #+begin_src emacs-lisp
 (global-subword-mode 1)
+#+end_src
+
+* Hungry delete
+This package deletes all the white spaces when backspace is pressed once until a non-whitespace character is been encountered.
+#+begin_src emacs-lisp
+(use-package hungry-delete
+  :ensure t
+  :config (global-hungry-delete-mode))
 #+end_src
 
 * IVY (COUNSEL/SWIPER)
@@ -376,6 +374,14 @@ An Emacs function to temporarily make one buffer fullscreen. You can quickly res
 (setq ibuffer-expert t)
 #+end_src
 
+** Kill all buffers
+#+begin_src emacs-lisp
+(defun kill-all-buffers()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+(global-set-key (kbd "s-x k") 'kill-all-buffers)
+#+end_src
+
 * Moving around Emacs
 ** Switch Windows
 #+begin_src emacs-lisp
@@ -412,21 +418,12 @@ These functions take the pointer to the newly opened window rather than keeping 
 
 * Auto completions
 ** Company
+Company by default comes with a lisp and elisp backend for auto-completion but we need to setup backends for other languages.
 #+begin_src emacs-lisp
 (use-package company
   :ensure t
-  :config
-  (setq company-idle-delay 1)
-  (setq company-minimum-prefix-length 3)
   :init
-  (company-mode 1))
-
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "M-n") nil)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (define-key company-active-map (kbd "SPC") #'company-abort))
+  (add-hook 'after-init-hook 'global-company-mode))
 #+end_src
 
 * Dired Launch
@@ -567,4 +564,45 @@ NOTE: Which-key has an annoying bug that in some fonts and font sizes, the botto
   (backward-word)
   (kill-word 1))
 (global-set-key (kbd "C-c w w") 'kill-whole-word)
+#+end_src
+
+** Copy whole line
+#+begin_src emacs-lisp
+(defun copy-whole-line()
+  (interactive)
+  (save-excursion
+    (kill-new
+    (buffer-substring
+     (point-at-bol)
+     (point-at-eol)))))
+(global-set-key (kbd "C-c w l") 'copy-whole-line)
+#+end_src
+
+* Diminish modes
+Keep this at the end of the file because it should be loaded after everything else has been loaded
+#+begin_src emacs-lisp
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'which-key-mode)
+  (diminish 'projectile-mode)
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'ivy-posframe-mode)
+  (diminish 'counsel-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'company-mode)
+  (diminish 'which-key-mode)
+  (diminish 'linum-relative-mode)
+  (diminish 'hungry-delete-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'subword-mode)
+  (diminish 'beacon-mode)
+  (diminish 'irony-mode)
+  (diminish 'page-break-lines-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'rainbow-delimiters-mode)
+  (diminish 'rainbow-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'helm-mode))
 #+end_src
