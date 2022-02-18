@@ -119,6 +119,12 @@ Let's make this look better
   :ensure t
   :init
   (diminish 'which-key-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'ivy-postframe-mode)
+  (diminish 'counsel-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'which-key-mode)
   (diminish 'linum-relative-mode)
   (diminish 'hungry-delete-mode)
   (diminish 'visual-line-mode)
@@ -234,6 +240,34 @@ NOTE: If the setting for ‘ivy-posframe-display’ is set to ‘nil’ (false),
       (t . 10)))
   :config
   (ivy-posframe-mode 1)) ; 1 enables posframe-mode, 0 disables it.
+#+end_src
+
+* Evil mode, time to go completely evil
+Evil mode provides the vim keybindings for emacs and it works flawlessly
+#+begin_src emacs-lisp
+;;(use-package undo-fu
+;;  :ensure t)
+;;
+;;(use-package evil
+;;  :ensure t
+;;  :demand t
+;;  :bind (("<escape>" . keyboard-escape-quit))
+;;  :init
+;;;; allows for using cgn
+;;  (setq evil-search-module 'evil-search)
+;;  (setq evil-want-keybinding nil)
+;;  ;; no vim insert button
+;;  (setq evil-undo-system 'undo-fu)
+;;  :config
+;;  (evil-mode 1))
+;;
+;;;; Vim bindings everywhere else
+;;(use-package evil-collection
+;;  :ensure t
+;;  :after evil
+;;  :config
+;;  (setq evil-want-integration t)
+;;  (evil-collection-init))
 #+end_src
 
 * MAGIT
@@ -359,6 +393,7 @@ An Emacs function to temporarily make one buffer fullscreen. You can quickly res
 #+end_src
 
 ** Following window splits
+These functions take the pointer to the newly opened window rather than keeping it on the same window to be changed manually.
 #+begin_src emacs-lisp
 (defun split-and-follow-horizontally ()
   (interactive)
@@ -507,9 +542,29 @@ NOTE: Which-key has an annoying bug that in some fonts and font sizes, the botto
 (which-key-mode)
 #+end_src
 
-* RUNTIME PERFORMANCE
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
+* Config edti/reload
+** Edit
 #+begin_src emacs-lisp
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
+(defun config-visit()
+  (interactive)
+  (find-file "~/.emacs.d/config.org"))
+(global-set-key (kbd "C-c e") 'config-visit)
+#+end_src
+
+** Reload
+#+begin_src emacs-lisp
+(defun config-reload()
+  (interactive)
+  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+(global-set-key (kbd "C-c r") 'config-reload)
+#+end_src
+
+* Custom Functions
+** Kill the whole word, no matter where your position is.
+#+begin_src emacs-lisp
+(defun kill-whole-word()
+  (interactive)
+  (backward-word)
+  (kill-word 1))
+(global-set-key (kbd "C-c w w") 'kill-whole-word)
 #+end_src
