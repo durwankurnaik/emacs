@@ -121,6 +121,7 @@ Let's make this look better
 #+end_src
 
 * Emacs, come rule my computer
+** The base setup
 If you want emacs as the whole and soul of your computer, then proceed with this.
 #+begin_src emacs-lisp
 ;;(use-package exwm
@@ -128,6 +129,26 @@ If you want emacs as the whole and soul of your computer, then proceed with this
 ;;  :config
 ;;  (require 'exwm-config)
 ;;  (exwm-config-default))
+#+end_src
+
+** Setting up the system tray
+#+begin_src emacs-lisp
+;;(require 'exwm-systemtray)
+;;(exwm-systemtray-enable)
+#+end_src
+
+** Some nice little hacks
+#+begin_src emacs-lisp
+;;(global-set-key (kbd "s-k") 'exwm-workspace-delete)
+;;(global-set-key (kbd "s-w") 'exwm-workspace-swap)
+#+end_src
+
+** Some necessary packages
+#+begin_src emacs-lisp
+;;(use-package dmenu
+;;  :ensure t
+;;  :bind
+;;  ("M-SPC" . 'dmenu))
 #+end_src
 
 * Don't show system load to me, Emacs
@@ -243,29 +264,29 @@ NOTE: If the setting for ‘ivy-posframe-display’ is set to ‘nil’ (false),
 * Evil mode, time to go completely evil
 Evil mode provides the vim keybindings for emacs and it works flawlessly
 #+begin_src emacs-lisp
-;;(use-package undo-fu
-;;  :ensure t)
-;;
-;;(use-package evil
-;;  :ensure t
-;;  :demand t
-;;  :bind (("<escape>" . keyboard-escape-quit))
-;;  :init
-;;;; allows for using cgn
-;;  (setq evil-search-module 'evil-search)
-;;  (setq evil-want-keybinding nil)
-;;  ;; no vim insert button
-;;  (setq evil-undo-system 'undo-fu)
-;;  :config
-;;  (evil-mode 1))
-;;
-;;;; Vim bindings everywhere else
-;;(use-package evil-collection
-;;  :ensure t
-;;  :after evil
-;;  :config
-;;  (setq evil-want-integration t)
-;;  (evil-collection-init))
+(use-package undo-fu
+  :ensure t)
+
+(use-package evil
+  :ensure t
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+;; allows for using cgn
+  (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  ;; no vim insert button
+  (setq evil-undo-system 'undo-fu)
+  :config
+  (evil-mode 1))
+
+;; Vim bindings everywhere else
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
 #+end_src
 
 * MAGIT
