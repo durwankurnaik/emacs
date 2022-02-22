@@ -514,8 +514,7 @@ Vterm is a terminal emulator within Emacs.  The ‘shell-file-name’ setting se
 #+begin_src emacs-lisp
 (use-package vterm
   :ensure t
-  :init
-  (global-set-key (kbd "<s-return>") 'vterm))
+  :init)
 #+end_src
 
 * WhichKey
@@ -539,7 +538,7 @@ NOTE: Which-key has an annoying bug that in some fonts and font sizes, the botto
 (which-key-mode)
 #+end_src
 
-* Config edti/reload
+* Config edit/reload
 ** Edit
 #+begin_src emacs-lisp
 (defun config-visit()
