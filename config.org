@@ -43,6 +43,7 @@ By default in Emacs, we don’t have ability to select text, and then start typi
 Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
 #+begin_src emacs-lisp
 (use-package emojify
+  :ensure t
   :hook (after-init . global-emojify-mode))
 #+end_src
 
@@ -176,9 +177,11 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
 ** Installing IVY and basic setup
 #+begin_src emacs-lisp
 (use-package counsel
+  :ensure t
   :after ivy
   :config (counsel-mode))
 (use-package ivy
+  :ensure t
   :defer 0.1
   :diminish
   :bind
@@ -191,6 +194,7 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
   :config
   (ivy-mode))
 (use-package ivy-rich
+  :ensure t
   :after ivy
   :custom
   (ivy-virtual-abbreviate 'full
@@ -201,6 +205,7 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
                                'ivy-rich-switch-buffer-transformer)
   (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
 (use-package swiper
+  :ensure t
   :after ivy
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
@@ -214,7 +219,8 @@ The following line removes the annoying ‘^’ in things like counsel-M-x and o
 
 Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
 #+begin_src emacs-lisp
-(use-package smex)
+(use-package smex
+  :ensure t)
 (smex-initialize)
 #+end_src
 
@@ -240,6 +246,7 @@ Ivy-posframe is an ivy extension, which lets ivy use posframe to show its candid
 NOTE: If the setting for ‘ivy-posframe-display’ is set to ‘nil’ (false), anything that is set to ‘ivy-display-function-fallback’ will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to ‘t’ (true), then the fallback position will be centered in the window.
 #+begin_src emacs-lisp
 (use-package ivy-posframe
+  :ensure t
   :init
   (setq ivy-posframe-display-functions-alist
     '((swiper                     . ivy-posframe-display-at-point)
@@ -313,7 +320,7 @@ A git client for Emacs.  Often cited as a killer feature for Emacs.
   (setq magit-git-global-arguments (remove bare-work-tree magit-git-global-arguments))
   (call-interactively 'magit-status))
 
-(use-package magit)
+(use-package magit :ensure t)
 #+end_src
 
 * Electric pair mode
@@ -488,7 +495,7 @@ Org Mode is THE killer feature within Emacs.  But it does need some tweaking.
 ** Enabling Org Bullets
 Org-bullets gives us attractive bullets rather than asterisks.
 #+begin_src emacs-lisp
-(use-package org-bullets)
+(use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
@@ -511,6 +518,7 @@ We want the same syntax highlighting in source blocks as in the native language 
 Toc-org helps you to have an up-to-date table of contents in org files without exporting (useful for README files on GitHub).  Use :TOC: to create the table.
 #+begin_src emacs-lisp
 (use-package toc-org
+  :ensure t
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
@@ -543,6 +551,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 NOTE: Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
 #+begin_src emacs-lisp
 (use-package which-key
+  :ensure t
   :init
   (setq which-key-side-window-location 'bottom
         which-key-sort-order #'which-key-key-order-alpha
