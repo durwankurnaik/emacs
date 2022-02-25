@@ -2,7 +2,6 @@ config.el
 elpa/
 emojis/
 eshell/
-projectile-bookmarks.eld
 recentf
 smex-items
 transient/
