@@ -2,12 +2,12 @@ config.el
 elpa/
 emojis/
 eshell/
+dmenu-items
+ido.last
+*.eld
+tramp
 recentf
 smex-items
 transient/
 *~
 auto-save-list/
-dmenu-items
-ido.last
-*.eld
-tramp
