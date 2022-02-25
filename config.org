@@ -63,7 +63,7 @@ Emojify is an Emacs extension to display emojis. It can display github style emo
 * Clock
 A clock that shows time at the end of the modeline
 #+begin_src emacs-lisp
-(setq display-time-24hr-format t)
+(setq display-time-12hr-format t)
 (display-time-mode 1)
 #+end_src
 
@@ -173,7 +173,6 @@ This package deletes all the white spaces when backspace is pressed once until a
 
 * IVY (COUNSEL/SWIPER)
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
-
 ** Installing IVY and basic setup
 #+begin_src emacs-lisp
 (use-package counsel
@@ -193,17 +192,18 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
   (setq enable-recursive-minibuffers t)
   :config
   (ivy-mode))
-(use-package ivy-rich
-  :ensure t
-  :after ivy
-  :custom
-  (ivy-virtual-abbreviate 'full
-   ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer)
-  (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
+;;This draws some issues with the normal C-x b mode, hence it is been commented out.
+;;(use-package ivy-rich
+;;  :ensure t
+;;  :after ivy
+;;  :custom
+;;  (ivy-virtual-abbreviate 'full
+;;   ivy-rich-switch-buffer-align-virtual-buffer t
+;;   ivy-rich-path-style 'abbrev)
+;;  :config
+;;  (ivy-set-display-transformer 'ivy-switch-buffer
+;;                               'ivy-rich-switch-buffer-transformer)
+;;  (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
 (use-package swiper
   :ensure t
   :after ivy
@@ -393,6 +393,7 @@ An Emacs function to temporarily make one buffer fullscreen. You can quickly res
 #+end_src
 
 ** Enable iBuffers
+Same functionality as the normal buffers but don't know why this is here. Maybe I will delete this in future.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
@@ -569,6 +570,7 @@ NOTE: Which-key has an annoying bug that in some fonts and font sizes, the botto
 #+end_src
 
 * Config edit/reload
+It's pain to search for the config file to again and again, so this shortcut helps alot in conveniently changing the elements of config file.
 ** Edit
 #+begin_src emacs-lisp
 (defun config-visit()

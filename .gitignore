@@ -7,3 +7,8 @@ recentf
 smex-items
 transient/
 *~
+auto-save-list/
+dmenu-items
+ido.last
+*.eld
+tramp

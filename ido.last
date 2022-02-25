@@ -22,11 +22,11 @@
 
 ;; ----- ido-dir-file-cache -----
 (
+ ("/home/sparrxw/.emacs.d/" (25112 41514 95794 78000) ".gitignore" "./" ".#config.org" "tramp" "README.org" "auto-save-list/" ".git/" "dmenu-items" "config.org" "projectile-bookmarks.eld" "../" "init.el" "elpa/" "recentf" "emojis/" "ido.last~" "ido.last" "recentf~" "smex-items" "config.el" "exwm/" "transient/")
+
+ ("/home/sparrxw/" (25112 26196 767171 851000) ".gnupg/" ".npm/" ".recently-used" "pix/" ".bashrc" "./" ".bash_logout" ".mono/" ".lesshst" ".viminfo" ".zshrc" ".emacs.d/" ".dmrc" "../" ".dwm/" "music/" ".xsession-errors" "dox/" ".local/" ".xsession-errors.old" ".nanorc" ".bash_profile" "dl/" ".config/" ".bash_history" ".zcompdump" "videos/" ".vscode/" "Desktop/" ".pki/" ".cache/" ".fehbg" ".mozilla/" ".ICEauthority" ".gitconfig" ".nv/" ".Xauthority")
+
  ("/home/" (25109 50740 350665 710000) "./" "../" "sparrxw/")
-
- ("/home/sparrxw/.emacs.d/" (25110 20169 242553 624000) ".gitignore" "./" "tramp" "README.org" "auto-save-list/" ".git/" "dmenu-items" "config.org" "projectile-bookmarks.eld" "../" "init.el" "elpa/" "recentf" "emojis/" "ido.last~" "ido.last" "recentf~" "smex-items" "config.el" "exwm/")
-
- ("/home/sparrxw/" (25110 19828 361692 853000) ".gnupg/" ".npm/" ".recently-used" "pix/" ".bashrc" "./" ".bash_logout" ".mono/" ".lesshst" ".viminfo" ".zshrc" ".emacs.d/" ".dmrc" "../" "music/" ".xsession-errors" "dox/" ".local/" ".xsession-errors.old" ".nanorc" ".bash_profile" "dl/" ".config/" ".bash_history" ".zcompdump" "videos/" "Desktop/" ".pki/" ".cache/" ".fehbg" ".mozilla/" ".ICEauthority" ".nv/" ".Xauthority")
 
  ("/home/sparrxw/pix/wallpapers/" (25103 60667 16827 992000) "wallhaven-mountain.png" "wallhaven-vm9dw5.jpg" "wallhaven-4dqldl.jpg" "wallhaven-9m7611.jpg" "wallhaven-xloxrv.jpg" "wallhaven-mp1vz9.jpg" "colorful.jpg" "wallhaven-4vwzm3.jpg" "wallhaven-3z32j3.jpg" "wallhaven-nerrmo.jpg" "wallhaven-4v62gp.png" "wallhaven-479yry.jpg" "wallhaven-3zgg16.png" "wallhaven-nerzk0.jpg" "wallhaven-28wymm.jpg" "wallhaven-k9ljg7.jpg" "girl.jpg" "wallhaven-j88vzy.jpg" "wallhaven-md3wyy.png" "wallhaven-1klodv.jpg" "wallhaven-pkvw9p.jpg" "wallhaven-o3vyk5.jpg" "wallhaven-e799o8.jpg" "../" "pirates.jpg" "wallhaven-0jj8vm.jpg" "wallhaven-k71pgd.jpg" "wallhaven-0qdpml.jpg" "wallhaven-x8wvzl.jpg" "wallhaven-g8pp5q.jpg" "wallhaven-zmll2w.jpg" "wallhaven-4gwdm7.jpg" "wallhaven-6o7z77.jpg" "doge.jpg" "default.jpg" "wallhaven-5w28d7.jpg" "wallhaven-nmjr69.png" "wallhaven-42mvzg.jpg" "wallhaven-9m2y3x.jpg" "wallhaven-nr5qrq.jpg" "wallhaven-nzx5lg.png" "wallhaven-q25edr.jpg" "wallhaven-e7omg8.jpg" "wallhaven-4xgzr3.jpg" "wallhaven-8odvm1.jpg" "wallhaven-x8wrel.jpg" "wallhaven-45o338.jpg" "wallhaven-m91kdk.jpg" "alexander-slattery-LI748t0BK8w-unsplash.jpg" "wallhaven-2exp1x.jpg" "wallhaven-72m8ve.jpg" "wallhaven-6qqmew.png" "noice.png" "\\.jpg" "wallhaven-l3rgwy.jpg" "railway.jpg" "samurai_girl.jpg" "wallhaven-night.jpg" "wallhaven-women.jpg" "wallhaven-dgdwog.jpg" "wallhaven-pk5r5j.png" "wallhaven-9mrm1k.jpg" "wallhaven-3kwy2d.jpg" "./" "wallhaven-l3rlgq.jpg" "andre-benz-cXU6tNxhub0-unsplash.jpg" "wallhaven-28wy7m.jpg")
 
