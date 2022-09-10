@@ -6,9 +6,10 @@ dmenu-items
 ido.last
 *.eld
 tramp
-recentf
+recentf*
 smex-items
 transient/
 *~
 auto-save-list/
 url/
+.cache
