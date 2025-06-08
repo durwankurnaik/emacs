@@ -50,7 +50,7 @@ Emojify is an Emacs extension to display emojis. It can display github style emo
 * Fonts
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist
-	     '(font . "JetBrainsMono Nerd Font-14"))
+	     '(font . "FiraCode Nerd Font-14"))
 #+end_src
 
 * Theme
